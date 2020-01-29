@@ -291,6 +291,34 @@ namespace IsamUnitTests
         }
 
         /// <summary>
+        /// Insert a single record with emtpy string.
+        /// </summary>
+        [TestMethod]
+        [Priority(2)]
+        [Description("Simple Insertion of empty string.")]
+        public void SimpleInsertionEmptyString()
+        {
+            string tableName = "test4insertionStringEmpty";
+            var tableDefinition = new TableDefinition(tableName);
+            tableDefinition.Columns.Add(new ColumnDefinition("col1") { Type = typeof(string) });
+
+            this.dbid.CreateTable(tableDefinition);
+
+            using (var cursor = this.dbid.OpenCursor(tableName))
+            {
+                cursor.BeginEditForInsert();
+                cursor.EditRecord["col1"] = string.Empty;
+                cursor.AcceptChanges();
+
+                cursor.MoveBeforeFirst();
+                cursor.MoveNext();
+                Assert.AreEqual(string.Empty, cursor.Record["col1"]);
+            }
+
+            this.dbid.DropTable(tableName);
+        }
+
+        /// <summary>
         /// FindRecords(), then MoveNext().
         /// </summary>
         [TestMethod]

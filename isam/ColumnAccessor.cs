@@ -412,6 +412,11 @@ namespace Microsoft.Database.Isam
                 byte[] bytes = Converter.BytesFromObject(coltyp, isAscii, obj);
                 int bytesLength = bytes == null ? 0 : bytes.Length;
 
+                if ((null != bytes) && (0 == bytes.Length))
+                {
+                    grbitSet |= SetColumnGrbit.ZeroLength;
+                }
+
                 Api.JetSetColumn(this.isamSession.Sesid, this.tableid, columnid, bytes, bytesLength, grbitSet, setinfo);
 
                 this.updateID++;
