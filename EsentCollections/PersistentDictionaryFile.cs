@@ -114,7 +114,7 @@ namespace Microsoft.Isam.Esent.Collections.Generic
                 File.Delete(file);
             }
 
-            foreach (string file in Directory.GetFiles(config.LogFilePath, string.Format(CultureInfo.InvariantCulture, "res*.log", config.BaseName)))
+            foreach (string file in Directory.GetFiles(config.LogFilePath, "res*.log"))
             {
                 File.Delete(file);
             }
